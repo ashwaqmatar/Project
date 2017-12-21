@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Clients Data</title>
+		<script src='jquery-3.2.1.min.js'></script>
+		<meta charset="utf-8"></meta>
+	</head>
+	<body>
+		<h1>Welcome!</h1>
+		<form style='border: solid 1px blue; margin: 10px; padding: 5px'>
+		
+		<table style="width:100%">
+			<tr>
+				<th>
+					<div >
+						<button id='addDir' style='width:100%'>Add Dir</button>
+					</div>
+					<div >
+						<button id='addCSV' style='width:100%'>Add CSV</button>
+					</div>
+					Clear the whole data
+					<div >
+						<button id='clearData' style='width:100%'>Clear Data</button>
+					</div>
+					Save the whole Data
+					<div >
+						<button id='SaveToCSV' style='width:100%'>Save to CSV</button>
+					</div>
+					Enter a directory's name or a CSV file name
+					<div>
+						<input id='name' style='width:100%'/>
+					</div>
+				</th>
+				<th style="width: 262px; ">
+					<div>
+						Filter for time,lat,lon and alt
+					</div>
+					<div >
+						<button id='FilteTimerMin' style='width:40%'>MinTime</button>
+						<button id='FilteTimeMax' style='width:40%'>MaxTime</button>
+					</div>
+					<div >
+						<button id='FilterLatMin' style='width:40%'>MinLat</button>
+						<button id='FilterLatMax' style='width:40%'>MaxLat</button>
+					</div>
+					<div >
+						<button id='FilterLonMin' style='width:40%'>MinLon</button>
+						<button id='FilterLonMax' style='width:40%'>MaxLon</button>
+					</div>
+					<div >
+						<button id='FilterAltMin' style='width:40%'>MinAlt</button>
+						<button id='FilterAltMax' style='width:40%'>MaxAlt</button>
+					</div>
+				</th>
+				<th style="width: 462px; ">
+					Algorithms
+					<div >
+						<input id='MAC' style='width:45%'/>
+						<button id='Submit' style='width:45%'>Submit</button>
+					</div>
+					<div> "Lat,Lon,Alt,Acc"</div>
+					<div id='outputCoor' style='border: dashed 1px green; margin: 10px; padding: 5px'>
+					</div>
+					<div>
+						MAC1:<input id='MAC1' style='width:30%'/>Signal1:<input id='Signal1' style='width:30%'/>
+					</div>
+					<div>
+						MAC2:<input id='MAC2' style='width:30%'/>Signal2:<input id='Signal2' style='width:30%'/>
+					</div>
+					<div>
+						MAC3:<input id='MAC3' style='width:30%'/>Signal3:<input id='Signal3' style='width:30%'/>
+					</div>
+					<div>
+						<center><button id='Submit' style='width:25%'>Submit</button></center>
+					</div>
+				</th>
+			</tr>
+		</table>
+		<div id='StructureOutput' style='border: dashed 1px green; margin: 10px; padding: 5px'>
+		The filtered data is:
+		</div>
+		</form>
+
+	</body>
+</html>

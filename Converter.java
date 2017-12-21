@@ -1,30 +1,22 @@
-package add;
-import java.io.FileNotFoundException;
-
+package ConverterPackage;
 import java.util.Scanner;
 
 public class Converter {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 		// TODO Auto-generated method stub
-		System.out.println("Create a folder and put in it these files:\n (1) WigleWifi's csv\n (2) WigleWifi's kml\n (3) Two txt files "
-				+ "one will be converted to kml and the other to csv\nInsert the folder's path:");
+		System.out.println("To convert a directory of csv files into one csv file enter 1.\nTo convert a csv file to kml enter2.");
 		Scanner scan = new Scanner(System.in);
-		String path = scan.nextLine();
-		System.out.println("The Wigle's csv name:");
-		String wigleCSV = scan.nextLine();
-		System.out.println("The Wigle's kml name:");
-		String WigleKML = scan.nextLine();
-		System.out.println("The text file's ,who will be converted to kml, name:");
-		String kml = scan.nextLine();
-		System.out.println("The text file's ,who will be converted to csv, name:");
-		String csv = scan.nextLine();
-		try {
-			Section2.kml_to_csv(path +"\\"+csv+".txt", path + "\\"+WigleKML+".kml");
-			Section3.csv_to_kml(path + "\\"+wigleCSV+".csv", path + "\\"+kml+".txt");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		int choice = scan.nextInt();
+		if(choice==1) {
+			String dirPath ="C:\\Users\\Ali Masarweh\\Desktop\\data";
+			String csvPath = "C:\\Users\\Ali Masarweh\\Desktop";
+			CSVToKML_DirToCSV.convert_csvDir_to_csv(dirPath, csvPath+"\\");
+		}
+		else {
+			String csvPath ="C:\\Users\\Ali Masarweh\\Desktop\\FilteredCSV.csv";
+			String kmlPath = "C:\\Users\\Ali Masarweh\\Desktop\\";
+			CSVToKML_DirToCSV.convert_csv_to_kml(csvPath, kmlPath);
 		}
 		scan.close();
 

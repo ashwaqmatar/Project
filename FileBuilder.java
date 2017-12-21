@@ -1,16 +1,9 @@
-package add;
-/**
- * 
- */
+package ConverterPackage;
 
-/**
- * @author Ali Masarweh
- *
- */
 public interface FileBuilder {
 	
 	String Create();
-	String Exit();
+	String Finish();
 	String addInfo(Object Data);
 
 }

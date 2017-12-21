@@ -1,12 +1,25 @@
-package add;
+package ConverterPackage;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class KMLBuilder implements FileBuilder {
 	
+	/**
+	 * Exit
+	 * public String Exit() yields the exiting information
+	 */
 	@Override
-	public String Exit( ){
+	public String Finish( ){
 		return ("</Folder>\n</Document>\n</kml>\n");
 	}
 	
+	/**
+	 * Create
+	 * public String Create() yields the commands to create the KML file
+	 */
 	@Override
 	public String Create( ){
 		return ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+"<kml xmlns=\"http://www.opengis.net"
@@ -18,14 +31,23 @@ public class KMLBuilder implements FileBuilder {
 				+ "<name>Wifi Networks</name>");
 	}
 	
+	/**
+	 * addInfo
+	 * public String addInfo(Object allInfo) yields the information in the proper way of KML file
+	 * @param Router
+	 * @return the correct format to create place mark that contains the router's data
+	 */
 	@Override
-	public String addInfo(Object splited_data1){
-		String[] splited_data = (String[]) splited_data1;
+	public String addInfo(Object obj){
+		if(!(obj instanceof Router)) {
+			return "";
+		}
+		Router router = (Router) obj;
 		String ans = "";
 		ans += createPlacemark();
-		ans += addName(splited_data[1]);
-		ans += createTheDescription(splited_data[0],splited_data[2],splited_data[4],splited_data[5],splited_data[9],splited_data[10]);
-		ans += createTheCoordinationPoint(splited_data[7],splited_data[6],splited_data[8]);
+		ans += addName(router.getSSID());
+		ans += createTheDescription(router.getMAC(),router.getFirstSeen(),router.getRSSI());
+		ans += createTheCoordinationPoint(router.getLongitude(),router.getLatitude(),router.getAltitudeMeters());
 		ans += closePlacemark();
 		return ans;
 	}
@@ -42,14 +64,13 @@ public class KMLBuilder implements FileBuilder {
 		return ("<name><![CDATA[ "+data+" ]]></name>\n");
 	}
 	
-	private String createTheDescription(String BSSID,String Capabilities,String channel,String RSSI
-			,String AccuracyMeters,String Type){
-		return ("<description><![CDATA[\nBSSID: <b>"+BSSID+"</b><br/>Capabilities: <b>"+Capabilities
-				+"</b><br/>channel: <b>"+channel+"</b><br/>RSSI: <b>"+RSSI+"</b><br/>AccuracyMeters: <b>"
-				+AccuracyMeters+"</b><br/>Type: <b>"+Type+"</b><br/>]]></description><styleUrl>#red</styleUrl>\n");
+	private String createTheDescription(String BSSID,String firstSeen,int RSSI) {
+		return ("<description><![CDATA[\nBSSID: <b>"+BSSID+"</b><br/> first seen:"+ firstSeen+
+				"</b><br/> timestamp: <b><when>"+ convert_date_to_timestamp(firstSeen).getTime()+"</b><br/>RSSI: <b>"+
+				RSSI+"</b><br/>]]></description><styleUrl>#red</styleUrl>\n");
 	}
 	
-	private String createTheCoordinationPoint(String CurrentLongitude,String CurrentLatitude,String AltitudeMeters){
+	private String createTheCoordinationPoint(double CurrentLongitude,double CurrentLatitude,double AltitudeMeters){
 		return ("<Point>\n<coordinates>"+CurrentLongitude+","+CurrentLatitude+","+AltitudeMeters+
 				"</coordinates></Point>\n");
 	}
@@ -60,6 +81,21 @@ public class KMLBuilder implements FileBuilder {
 			ans += splited_data[i] + " ";
 		}
 		return (ans + "\n</description>\n");
+	}
+	
+	private Timestamp convert_date_to_timestamp(String data){
+		SimpleDateFormat datetimeFormatter1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date lFromDate1 = null;
+		Timestamp fromTS1 = null;
+		try {
+			lFromDate1 = datetimeFormatter1.parse(data);
+			fromTS1 = new Timestamp(lFromDate1.getTime());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return fromTS1;
 	}
 	
 }
